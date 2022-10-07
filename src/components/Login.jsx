@@ -1,29 +1,59 @@
 import React, { useState } from "react";
-import { postApi } from "../services/ApiServices";
 
 const Login = () => {
   const [fetchRes, setRes] = useState(null);
+  const [user, setUser] = useState({ email: "", password: "" });
 
-  const handleSubmit = async () => {
-    const result = await postApi({
-      headers: {
-        Authorization: "Bearer 1234Test",
-        "Content-Type": "application/json",
-      },
-      url: "http://localhost:5000/login",
-      method: "POST",
-      body: JSON.stringify({ email: "gsr3@email.com", password: "test123" }),
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+
+    setUser((prev) => {
+      return { ...prev, [name]: value };
     });
   };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    const response = await fetch(
+      `${process.env.REACT_APP_LOCAL_BE_BASEURL}/login`,
+      {
+        headers: {
+          Authorization: "Bearer 1234Test",
+          "Content-Type": "application/json",
+        },
+        method: "POST",
+        body: JSON.stringify({ email: user.email, password: user.password }),
+      }
+    );
+    const result = await response.json();
+    const { accessToken } = result;
+
+    localStorage.setItem("investmentsToken", accessToken);
+    setUser({ email: "", password: "" });
+  };
+
   return (
     <div className="access-div">
-      <form>
+      <form onSubmit={handleSubmit}>
         <h2>Log Into Your Account</h2>
-        <input name="email" type="email" placeholder="Email" />
-        <input name="password" type="password" placeholder="Password" />
-        <button type="button" onClick={handleSubmit}>
-          Sign In
-        </button>
+        <input
+          onChange={handleChange}
+          name="email"
+          required
+          type="email"
+          placeholder="Email"
+          value={user.email}
+        />
+        <input
+          onChange={handleChange}
+          name="password"
+          required
+          type="password"
+          placeholder="Password"
+          value={user.password}
+        />
+        <button type="submit">Sign In</button>
       </form>
     </div>
   );

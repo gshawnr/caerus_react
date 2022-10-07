@@ -1,12 +1,14 @@
 import userEvent from "@testing-library/user-event";
 import React, { useEffect, useState } from "react";
-import { postApi } from "../services/ApiServices";
 
 const Register = () => {
-  const [error, setError] = useState(null);
+  const [fetchErrorMsg, setFetchErrorMsg] = useState(null);
+  const [fetchErrorCode, setFetchErrorCode] = useState(null);
   const [isLoaded, setIsLoaded] = useState(false);
-  const [fetchRes, setRes] = useState(null);
-  const [user, setUser] = useState({});
+  const [user, setUser] = useState({
+    email: "",
+    password: "",
+  });
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -15,39 +17,69 @@ const Register = () => {
     });
   };
 
-  const handleSubmit = async () => {
-    const result = await postApi({
-      headers: {
-        Authorization: "Bearer 1234Test",
-        "Content-Type": "application/json",
-      },
-      url: "http://localhost:5000/register",
-      method: "POST",
-      body: JSON.stringify({ email: user.email, password: user.password }),
-    });
-    setRes(result);
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    try {
+      const response = await fetch(
+        `${process.env.REACT_APP_LOCAL_BE_BASEURL}/register`,
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+          method: "POST",
+          body: JSON.stringify({ email: user.email, password: user.password }),
+        }
+      );
+
+      if (response.status !== 200) {
+        throw new Error(
+          JSON.stringify({
+            message: response.statusText,
+            statusCode: response.status,
+          })
+        );
+      }
+
+      setUser({ email: "", password: "" });
+      setFetchErrorMsg(null);
+      setFetchErrorCode(null);
+    } catch (err) {
+      const { message = "unable to register user", statusCode = 500 } =
+        JSON.parse(err.message);
+      setFetchErrorMsg(message);
+      setFetchErrorCode(statusCode);
+    }
   };
 
   return (
     <div className="access-div">
-      <form>
+      <form onSubmit={handleSubmit}>
         <h2>Create an Account</h2>
         <input
           name="email"
           type="email"
           placeholder="Email"
+          value={user.email}
           onChange={handleChange}
+          required
         />
         <input
           name="password"
           type="password"
           placeholder="Password"
+          value={user.password}
           onChange={handleChange}
+          required
         />
-        <button type="button" onClick={handleSubmit}>
-          Sign Up
-        </button>
+        <button type="submit">Sign Up</button>
       </form>
+      <br />
+      {fetchErrorMsg && (
+        <h3 style={{ color: "red", textAlign: "center" }}>
+          Error registering user: {fetchErrorMsg}
+        </h3>
+      )}
     </div>
   );
 };
