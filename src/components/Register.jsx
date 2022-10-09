@@ -1,10 +1,13 @@
-import userEvent from "@testing-library/user-event";
 import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 const Register = () => {
   const [fetchErrorMsg, setFetchErrorMsg] = useState(null);
   const [fetchErrorCode, setFetchErrorCode] = useState(null);
   const [isLoaded, setIsLoaded] = useState(false);
+
+  const navigate = useNavigate();
+
   const [user, setUser] = useState({
     email: "",
     password: "",
@@ -19,7 +22,6 @@ const Register = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
     try {
       const response = await fetch(
         `${process.env.REACT_APP_LOCAL_BE_BASEURL}/register`,
@@ -41,9 +43,13 @@ const Register = () => {
         );
       }
 
+      const { accessToken } = await response.json();
+      localStorage.setItem("investmentsToken", accessToken);
+
       setUser({ email: "", password: "" });
       setFetchErrorMsg(null);
       setFetchErrorCode(null);
+      navigate("/", { replace: true });
     } catch (err) {
       const { message = "unable to register user", statusCode = 500 } =
         JSON.parse(err.message);

@@ -1,8 +1,10 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 const Login = () => {
   const [fetchRes, setRes] = useState(null);
   const [user, setUser] = useState({ email: "", password: "" });
+  const navigate = useNavigate();
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -26,11 +28,12 @@ const Login = () => {
         body: JSON.stringify({ email: user.email, password: user.password }),
       }
     );
-    const result = await response.json();
-    const { accessToken } = result;
 
+    const { accessToken } = await response.json();
     localStorage.setItem("investmentsToken", accessToken);
+
     setUser({ email: "", password: "" });
+    navigate("/", { replace: true });
   };
 
   return (
