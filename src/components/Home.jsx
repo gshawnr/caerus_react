@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import Login from "./Login";
+import Table from "./Table";
 
 function Home() {
   const [investments, setInvestments] = useState([]);
@@ -53,17 +54,7 @@ function Home() {
       ) : fetchErrorMsg ? (
         <h3>Error loading page. Please try back later.</h3>
       ) : (
-        <ul>
-          {investments.map((inv) => {
-            return (
-              <p key={inv._id}>
-                ticker: {inv.ticker} | price: {inv.unitPrice} | units:{" "}
-                {inv.units} | market: {inv.market} | value:{" "}
-                {inv.unitPrice * inv.units}
-              </p>
-            );
-          })}
-        </ul>
+        <Table data={investments} />
       )}
     </div>
   );
