@@ -1,9 +1,35 @@
-.tableContainer {
+.tableClass {
   display: flex;
   justify-content: center;
-  align-items: center;
-  height: 300px;
-  width: 500px;
-  margin: 5% auto;
+  align-items: flex-start;
   background-color: snow;
+}
+
+table {
+  table-layout: fixed;
+  width: 100%;
+  border-collapse: collapse;
+  border: 3px solid black;
+  padding: 1rem;
+  font-size: larger;
+}
+
+tbody {
+  width: 100%;
+}
+
+tbody td {
+  text-align: center;
+  border: solid thin lightgray;
+}
+
+tbody tr th {
+  width: 9%;
+  border: solid thin lightgray;
+}
+tbody tr th:nth-child(4) {
+  width: 13%;
+}
+tbody tr th:nth-child(5) {
+  width: 13%;
 }

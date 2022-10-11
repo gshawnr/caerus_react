@@ -1,9 +1,19 @@
 body {
-  background-color: #cfffdc;
+  background-color: #c3ff99;
   margin: 0 auto;
   padding: 25px;
 }
 
+a {
+  color: green;
+  font-size: x-large;
+  margin: 0 2rem;
+}
+
+nav {
+  display: flex;
+  justify-content: center;
+}
 .access-div {
   background-color: #f9f9f9;
   border-radius: 25px;
@@ -31,7 +41,7 @@ body {
 }
 .access-div form button {
   display: block;
-  background-color: #3d8361;
+  background-color: #42855b;
   border-radius: 5px;
   color: #f9f9f9;
   width: 50%;

@@ -1,17 +1,19 @@
-import React, { useState } from "react";
-import { pick } from "lodash";
+import React from "react";
 
 function Row({ rowData, handleRowClick }) {
-  const rowObj = pick(
-    rowData,
-    process.env.REACT_APP_LOCAL_TABLE_COLS.split(",")
-  );
+  const colArr = process.env.REACT_APP_LOCAL_TABLE_COLS.split(",");
 
-  let formattedRow = Object.values(rowObj);
+  const formattedRow = colArr.map((col) => {
+    if (col === "value") {
+      return rowData.units * rowData.unitPrice || null;
+    }
+    return rowData[col] || null;
+  });
+
   return (
     <tr onClick={handleRowClick}>
       {formattedRow.map((col, index) => {
-        return <th key={index}>{col}</th>;
+        return <td key={index}>{col}</td>;
       })}
     </tr>
   );

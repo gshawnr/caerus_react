@@ -43,18 +43,18 @@ const Login = () => {
         <input
           onChange={handleChange}
           name="email"
-          required
           type="email"
           placeholder="Email"
           value={user.email}
+          required
         />
         <input
-          onChange={handleChange}
           name="password"
-          required
           type="password"
           placeholder="Password"
           value={user.password}
+          onChange={handleChange}
+          required
         />
         <button type="submit">Sign In</button>
       </form>

@@ -63,11 +63,11 @@ const Register = () => {
       <form onSubmit={handleSubmit}>
         <h2>Create an Account</h2>
         <input
+          onChange={handleChange}
           name="email"
           type="email"
           placeholder="Email"
           value={user.email}
-          onChange={handleChange}
           required
         />
         <input
@@ -80,7 +80,6 @@ const Register = () => {
         />
         <button type="submit">Sign Up</button>
       </form>
-      <br />
       {fetchErrorMsg && (
         <h3 style={{ color: "red", textAlign: "center" }}>
           Error registering user: {fetchErrorMsg}

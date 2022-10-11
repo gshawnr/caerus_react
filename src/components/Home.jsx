@@ -1,12 +1,19 @@
 import React, { useEffect, useState } from "react";
-import Login from "./Login";
+import "./Home.css";
 import Table from "./Table";
+import AddModal from "./AddModal";
+import EditModal from "./EditModal";
+import Modal from "./Modal";
+import { calculateTableData } from "../services/CalculationService";
 
 function Home() {
   const [investments, setInvestments] = useState([]);
   const [isLoaded, setIsLoaded] = useState(false);
   const [fetchErrorMsg, setFetchErrorMsg] = useState(null);
   const [fetchErrorCode, setFetchErrorCode] = useState(null);
+  const [addModal, setAddModal] = useState(false);
+  const [editModal, setEditModal] = useState(false);
+  const [editInv, setEditInv] = useState(null);
 
   useEffect(() => {
     const getInvestment = async () => {
@@ -29,7 +36,9 @@ function Home() {
         }
 
         const items = await res.json();
-        setInvestments(items);
+
+        const updatedInv = calculateTableData(items);
+        setInvestments(updatedInv);
         setFetchErrorMsg(null);
         setFetchErrorCode(null);
         setIsLoaded(true);
@@ -45,6 +54,28 @@ function Home() {
     getInvestment();
   }, []);
 
+  const handleAdd = (e) => {
+    e.preventDefault();
+    setAddModal(true);
+  };
+
+  const handleEdit = (obj) => {
+    setEditInv(obj);
+    setEditModal(true);
+  };
+
+  const closeAddModal = () => {
+    setAddModal((prev) => {
+      return !prev;
+    });
+  };
+
+  const closeEditModal = () => {
+    setEditModal((prev) => {
+      return !prev;
+    });
+  };
+
   return (
     <div>
       {!isLoaded && !fetchErrorMsg ? (
@@ -54,7 +85,14 @@ function Home() {
       ) : fetchErrorMsg ? (
         <h3>Error loading page. Please try back later.</h3>
       ) : (
-        <Table data={investments} />
+        <div className="tableContainer">
+          {addModal && <AddModal closeModal={closeAddModal}></AddModal>}
+          {editModal && (
+            <EditModal closeModal={closeEditModal}>{editInv}</EditModal>
+          )}
+          <Table handleRowClick={handleEdit} data={investments} />
+          <button onClick={handleAdd}>Add</button>
+        </div>
       )}
     </div>
   );

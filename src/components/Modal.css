@@ -1,3 +1,7 @@
+button {
+  background-color: #42855b;
+  color: #fff;
+}
 .modal {
   position: fixed;
   z-index: 1;
@@ -9,17 +13,18 @@
   width: 100vw;
   height: 100vh;
   overflow: auto;
-  background-color: rgba(155, 155, 155, 0.5);
+  background-color: rgba(213, 218, 212, 0.9);
 }
 
 .modalContainer {
   background-color: #fff;
   justify-content: center;
   align-items: center;
-  height: 500px;
   width: 800px;
   border-radius: 10px;
   padding: 1% 2%;
+  border-style: solid;
+  border-color: #3d8361;
 }
 
 .modalCloseBtn {

@@ -1,40 +1,34 @@
-import React, { useState } from "react";
+import React from "react";
 import "./Table.css";
-import { pick } from "lodash";
 import Row from "./Row";
 
-function Table(props) {
+function Table({ data = [], handleRowClick = null, handleCellClick = null }) {
   const COL_HEADERS = process.env.REACT_APP_LOCAL_TABLE_COLS.split(",");
 
   const handleColClick = (e) => {
-    console.log("col clicked", e.target);
-  };
-
-  const handleRowClick = (inv) => {
-    console.log("Handle row click by investment id", inv);
+    console.log("Table header clicked", e.target);
   };
 
   return (
-    <div className="tableContainer">
-      <table>
-        <tbody>
-          <tr onClick={handleColClick}>
-            {COL_HEADERS.map((col, index) => (
-              <th key={index}>{col}</th>
-            ))}
-          </tr>
-          {props.data.map((thisRow, index) => {
-            return (
-              <Row
-                handleRowClick={() => handleRowClick(thisRow)}
-                key={index}
-                rowData={thisRow}
-              />
-            );
-          })}
-        </tbody>
-      </table>
-    </div>
+    <table className="tableClass">
+      <tbody>
+        <tr onClick={handleColClick}>
+          {COL_HEADERS.map((col, index) => (
+            <th key={index}>{col}</th>
+          ))}
+        </tr>
+        {data.map((thisRow, index) => {
+          return (
+            <Row
+              handleRowClick={() => handleRowClick(thisRow)}
+              handleCellClick={() => handleCellClick()}
+              key={index}
+              rowData={thisRow}
+            />
+          );
+        })}
+      </tbody>
+    </table>
   );
 }
 
