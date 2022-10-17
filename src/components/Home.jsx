@@ -3,16 +3,19 @@ import "./Home.css";
 import Table from "./Table";
 import AddModal from "./AddModal";
 import EditModal from "./EditModal";
-import Modal from "./Modal";
-import { calculateTableData } from "../services/CalculationService";
+import {
+  calculateTableData,
+  investmentFormatter,
+} from "../services/CalculationService";
 
 function Home() {
   const [investments, setInvestments] = useState([]);
+  const [refreshApp, setRefreshApp] = useState(false);
   const [isLoaded, setIsLoaded] = useState(false);
   const [fetchErrorMsg, setFetchErrorMsg] = useState(null);
   const [fetchErrorCode, setFetchErrorCode] = useState(null);
   const [addModal, setAddModal] = useState(false);
-  const [editModal, setEditModal] = useState(false);
+  const [openEditModal, setOpenEditModal] = useState(false);
   const [editInv, setEditInv] = useState(null);
 
   useEffect(() => {
@@ -36,32 +39,99 @@ function Home() {
         }
 
         const items = await res.json();
-
-        const updatedInv = calculateTableData(items);
+        const updatedInv = await calculateTableData(items);
         setInvestments(updatedInv);
         setFetchErrorMsg(null);
         setFetchErrorCode(null);
         setIsLoaded(true);
+        setRefreshApp(false);
       } catch (err) {
+        console.log(JSON.stringify(err));
         const { message = "error fetching data", statusCode = 500 } =
           JSON.parse(err.message) || {};
         setFetchErrorMsg(message);
         setFetchErrorCode(statusCode);
         setIsLoaded(false);
+        setRefreshApp(false);
       }
     };
 
     getInvestment();
-  }, []);
+  }, [refreshApp]);
 
-  const handleAdd = (e) => {
-    e.preventDefault();
+  const handleAddBtn = (e) => {
     setAddModal(true);
   };
 
-  const handleEdit = (obj) => {
-    setEditInv(obj);
-    setEditModal(true);
+  const handleAddInvestment = async (inv) => {
+    try {
+      inv = investmentFormatter(inv);
+      const res = await fetch("http://localhost:5000/equities/add", {
+        method: "POST",
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("investmentsToken")}`,
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(inv),
+      });
+
+      if (res.status !== 200) throw new Error("error add new investment");
+
+      setAddModal(false);
+      setRefreshApp(true);
+    } catch (err) {
+      console.log("error adding investment", err.status, err.message);
+    }
+  };
+
+  const handleDeleteInvestment = async (inv) => {
+    try {
+      const response = await fetch("http://localhost:5000/equities/remove", {
+        method: "POST",
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("investmentsToken")}`,
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          ticker: inv.ticker,
+        }),
+      });
+
+      if (response.status !== 200) throw new Error("error removing investment");
+
+      setOpenEditModal(false);
+      setRefreshApp(true);
+    } catch (err) {
+      console.log("delete error: ", err);
+    }
+  };
+
+  const handleEditInvestment = async (obj) => {
+    try {
+      setEditInv(obj);
+      setOpenEditModal(true);
+    } catch (err) {
+      console.log("edit error", err);
+    }
+  };
+
+  const submitEdit = async (obj) => {
+    closeEditModal();
+    obj = investmentFormatter(obj);
+
+    const res = await fetch("http://localhost:5000/equities/edit", {
+      method: "PUT",
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("investmentsToken")}`,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(obj),
+    });
+
+    if (res.status !== 200) throw new Error("error add new investment");
+
+    // setEditModal(false);
+    setRefreshApp(true);
   };
 
   const closeAddModal = () => {
@@ -71,13 +141,13 @@ function Home() {
   };
 
   const closeEditModal = () => {
-    setEditModal((prev) => {
+    setOpenEditModal((prev) => {
       return !prev;
     });
   };
 
   return (
-    <div>
+    <div className="Parent">
       {!isLoaded && !fetchErrorMsg ? (
         <h3> loading ... </h3>
       ) : fetchErrorMsg && fetchErrorCode === 401 ? (
@@ -86,12 +156,23 @@ function Home() {
         <h3>Error loading page. Please try back later.</h3>
       ) : (
         <div className="tableContainer">
-          {addModal && <AddModal closeModal={closeAddModal}></AddModal>}
-          {editModal && (
-            <EditModal closeModal={closeEditModal}>{editInv}</EditModal>
+          {addModal && (
+            <AddModal
+              closeModal={closeAddModal}
+              addInv={handleAddInvestment}
+            ></AddModal>
           )}
-          <Table handleRowClick={handleEdit} data={investments} />
-          <button onClick={handleAdd}>Add</button>
+          {openEditModal && (
+            <EditModal
+              deleteInv={handleDeleteInvestment}
+              onEdit={submitEdit}
+              closeModal={closeEditModal}
+            >
+              {editInv}
+            </EditModal>
+          )}
+          <Table handleRowClick={handleEditInvestment} data={investments} />
+          <button onClick={handleAddBtn}>Add</button>
         </div>
       )}
     </div>

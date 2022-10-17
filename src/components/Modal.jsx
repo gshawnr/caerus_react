@@ -14,19 +14,21 @@ function Modal({
   return (
     <div className="modal">
       <div className="modalContainer">
-        <div className="modalCloseBtn">
-          <button onClick={() => closeModal()}>
+        {/* <div className="modalCloseBtn"> */}
+        {
+          <button className="modalCloseBtn" onClick={() => closeModal()}>
             <CloseIcon />
           </button>
-        </div>
+        }
+        {/* </div> */}
         <div className="modalTitle">
           <h2>{title}</h2>
         </div>
         <div className="modalContent">{children}</div>
-        <div className="btns">
-          <button onClick={() => closeModal()}>{leftBtn}</button>
-          <button onClick={() => closeModal()}>{rightBtn}</button>
-        </div>
+        {/* <div className="btns"> */}
+        {/* <button onClick={() => closeModal()}>{leftBtn}</button> */}
+        {/* <button onClick={() => closeModal()}>{rightBtn}</button> */}
+        {/* </div> */}
       </div>
     </div>
   );

@@ -29,15 +29,9 @@ button {
 
 .modalCloseBtn {
   background-color: transparent;
-  display: flex;
-  justify-content: end;
-  align-items: flex-start;
-  padding: 9px;
-}
-
-.modalCloseBtn button {
-  background-color: transparent;
   border: none;
+  color: black;
+  text-align: end;
 }
 
 .modalTitle {
@@ -45,8 +39,10 @@ button {
 }
 
 .modalContent {
-  background-color: red;
+  text-align: center;
+  background-color: #c3ff99;
   border-radius: 10px;
   height: 60%;
   margin-bottom: 3%;
+  padding: 2px;
 }

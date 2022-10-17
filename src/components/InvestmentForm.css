@@ -1,0 +1,29 @@
+.controlGroup {
+  margin: 5% auto;
+  width: 95%;
+}
+
+label {
+  display: block;
+  font-size: 20px;
+  text-align: left;
+  margin: 1% 0;
+}
+
+form input {
+  border-radius: 5px;
+  font-size: 20px;
+  padding: 1% 2%;
+  width: 100%;
+}
+
+#form-btn {
+  display: block;
+  background-color: #42855b;
+  border-radius: 5px;
+  color: #f9f9f9;
+  width: 95%;
+  height: 40px;
+  font-size: large;
+  margin: 20px auto;
+}

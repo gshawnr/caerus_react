@@ -1,19 +1,32 @@
 import React from "react";
+import "./Row.css";
 
-function Row({ rowData, handleRowClick }) {
-  const colArr = process.env.REACT_APP_LOCAL_TABLE_COLS.split(",");
-
+function Row({
+  colArr = [],
+  rowData,
+  handleCellClick,
+  onRowClick,
+  rowEditable,
+}) {
   const formattedRow = colArr.map((col) => {
     if (col === "value") {
-      return rowData.units * rowData.unitPrice || null;
+      return Number((rowData.units * rowData.unitPrice).toFixed(2));
     }
-    return rowData[col] || null;
+    return rowData[col];
   });
 
   return (
-    <tr onClick={handleRowClick}>
+    <tr onClick={onRowClick}>
       {formattedRow.map((col, index) => {
-        return <td key={index}>{col}</td>;
+        return (
+          <td
+            contentEditable={rowEditable}
+            key={index}
+            onChange={(col) => handleCellClick && handleCellClick(col)}
+          >
+            {col}
+          </td>
+        );
       })}
     </tr>
   );
