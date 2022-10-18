@@ -8,8 +8,8 @@ import Nav from "./components/Nav";
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
-    <Nav />
     <BrowserRouter>
+      <Nav />
       <App />
     </BrowserRouter>
   </React.StrictMode>

@@ -1,0 +1,13 @@
+nav a {
+  /* font-weight: bold; */
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+.active-link {
+  text-decoration: underline;
+  font-weight: bolder;
+}
