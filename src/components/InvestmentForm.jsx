@@ -1,13 +1,15 @@
 import React, { useState } from "react";
 import "./InvestmentForm.css";
+import FormControl from "./FormControl";
+import FormButton from "./FormButton";
 
 function InvestmentForm({
+  formHeader = null,
   firstBtnLabel = "Save",
   firstBtnAction = null,
   secondBtnAction = null,
   secondBtnLabel = "Cancel",
   prefilled = {},
-  data = {},
 }) {
   const [investment, setInvestment] = useState({
     targetAllocation: prefilled.targetAllocation || "",
@@ -26,62 +28,56 @@ function InvestmentForm({
 
   return (
     <form>
-      <h2>Please complete all fields</h2>
+      <h2>{formHeader}</h2>
+      <FormControl
+        labelFor="ticker"
+        labelValue="Use link"
+        inputId="ticker"
+        inputName="ticker"
+        inputType="text"
+        inputPlaceholder="Ticker"
+        inputValue={investment.ticker}
+        inputRequired={true}
+        inputOnChangeHandler={onChangeHandler}
+      />
 
-      <div className="controlGroup">
-        <label htmlFor="ticker">
-          Use link to find required ticker symbol (ie bmo.xtse)
-        </label>
-        <input
-          onChange={onChangeHandler}
-          id="ticker"
-          name="ticker"
-          type="ticker"
-          placeholder="Ticker"
-          value={investment.ticker}
-          required
-        />
-      </div>
+      <FormControl
+        labelFor="targetAllocation"
+        labelValue="Please enter percent Value (%)"
+        inputId="targeAllocation"
+        inputName="targetAllocation"
+        inputType="text"
+        inputPlaceholder="Target Allocation"
+        inputValue={investment.targetAllocation}
+        inputRequired={true}
+        inputOnChangeHandler={onChangeHandler}
+      />
 
-      <div className="controlGroup">
-        <label htmlFor="targetAllocation">Please enter percent value (%)</label>
-        <input
-          id="targetAllocation"
-          name="targetAllocation"
-          type="text"
-          placeholder="Target Allocation"
-          value={investment.targetAllocation}
-          onChange={onChangeHandler}
-          required
-        />
-      </div>
-
-      <div className="controlGroup">
-        <label htmlFor="units">Fractional units not permitted</label>
-        <input
-          id="units"
-          name="units"
-          type="text"
-          placeholder="Units"
-          value={investment.units}
-          onChange={onChangeHandler}
-          required
-        />
-      </div>
-      <button
-        id="form-btn"
-        type="button"
-        onClick={() => firstBtnAction && firstBtnAction(investment)}
-      >
-        {firstBtnLabel}
-      </button>
-      <button
-        id="form-btn"
-        type="button"
-        onClick={() => secondBtnAction && secondBtnAction(investment)}
-      >
-        {secondBtnLabel}
-      </button>
+      <FormControl
+        labelFor="units"
+        labelValue="Fractional units not permitted"
+        inputId="units"
+        inputName="units"
+        inputType="text"
+        inputPlaceholder="Units"
+        inputValue={investment.units}
+        inputRequired={true}
+        inputOnChangeHandler={onChangeHandler}
+      />
+      <FormButton
+        btnId="form-btn"
+        btnType="button"
+        btnText={firstBtnLabel}
+        btnClickHandler={firstBtnAction}
+        btnData={investment}
+      />
+      <FormButton
+        btnId="form-btn"
+        btnType="button"
+        btnText={secondBtnLabel}
+        btnClickHandler={secondBtnAction}
+        btnData={investment}
+      />
     </form>
   );
 }

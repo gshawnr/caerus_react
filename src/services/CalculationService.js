@@ -32,19 +32,19 @@ export const investmentFormatter = (inv) => {
     unitPrice = null,
   } = inv;
 
-  if (targetAllocation) {
+  if (targetAllocation !== null) {
     // assumes percent string to number converstion
     inv.targetAllocation = roundHelper(targetAllocation, 0);
   }
-  if (units) {
+  if (units !== null) {
     inv.units = roundHelper(units, 0);
   }
 
-  if (currentAllocation) {
+  if (currentAllocation !== null) {
     inv.currentAllocation = roundHelper(currentAllocation, 0);
   }
 
-  if (unitPrice) {
+  if (unitPrice !== null) {
     inv.unitPrice = roundHelper(unitPrice, 0);
   }
 

@@ -7,6 +7,7 @@ import {
   calculateTableData,
   investmentFormatter,
 } from "../services/CalculationService";
+import { apiCall } from "../services/ApiServices";
 
 function Home() {
   const [investments, setInvestments] = useState([]);
@@ -21,25 +22,12 @@ function Home() {
   useEffect(() => {
     const getInvestment = async () => {
       try {
-        const res = await fetch("http://localhost:5000/investments", {
-          method: "GET",
-          headers: {
-            Authorization: `Bearer ${localStorage.getItem("investmentsToken")}`,
-            "Content-Type": "application/json",
-          },
-        });
-
-        if (res.status !== 200) {
-          throw Error(
-            JSON.stringify({
-              message: "fetch error",
-              statusCode: res.status,
-            })
-          );
-        }
-
-        const items = await res.json();
+        const items = await apiCall(
+          `${process.env.REACT_APP_BASEURL}/investments`,
+          "GET"
+        );
         const updatedInv = await calculateTableData(items);
+
         setInvestments(updatedInv);
         setFetchErrorMsg(null);
         setFetchErrorCode(null);
@@ -66,16 +54,12 @@ function Home() {
   const handleAddInvestment = async (inv) => {
     try {
       inv = investmentFormatter(inv);
-      const res = await fetch("http://localhost:5000/equities/add", {
-        method: "POST",
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem("investmentsToken")}`,
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(inv),
-      });
 
-      if (res.status !== 200) throw new Error("error add new investment");
+      await apiCall(
+        `${process.env.REACT_APP_BASEURL}/equities/add`,
+        "POST",
+        JSON.stringify(inv)
+      );
 
       setAddModal(false);
       setRefreshApp(true);
@@ -86,18 +70,11 @@ function Home() {
 
   const handleDeleteInvestment = async (inv) => {
     try {
-      const response = await fetch("http://localhost:5000/equities/remove", {
-        method: "POST",
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem("investmentsToken")}`,
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          ticker: inv.ticker,
-        }),
-      });
-
-      if (response.status !== 200) throw new Error("error removing investment");
+      await apiCall(
+        `${process.env.REACT_APP_BASEURL}/equities/remove`,
+        "POST",
+        JSON.stringify({ ticker: inv.ticker })
+      );
 
       setOpenEditModal(false);
       setRefreshApp(true);
@@ -119,18 +96,12 @@ function Home() {
     closeEditModal();
     obj = investmentFormatter(obj);
 
-    const res = await fetch("http://localhost:5000/equities/edit", {
-      method: "PUT",
-      headers: {
-        Authorization: `Bearer ${localStorage.getItem("investmentsToken")}`,
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(obj),
-    });
+    await apiCall(
+      `${process.env.REACT_APP_BASEURL}/equities/edit`,
+      "PUT",
+      JSON.stringify(obj)
+    );
 
-    if (res.status !== 200) throw new Error("error add new investment");
-
-    // setEditModal(false);
     setRefreshApp(true);
   };
 

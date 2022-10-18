@@ -3,10 +3,10 @@ import Modal from "./Modal";
 import InvestmentForm from "./InvestmentForm";
 
 function AddInv({ closeModal, addInv }) {
-  // const children = [{ ticker: "", targetAllocation: 0, units: 0 }];
   return (
-    <Modal title="Add New Investment" closeModal={closeModal}>
+    <Modal closeModal={closeModal}>
       <InvestmentForm
+        formHeader="Please complete all fields"
         firstBtnLabel="Add Investment"
         firstBtnAction={addInv}
         secondBtnAction={closeModal}

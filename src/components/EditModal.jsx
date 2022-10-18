@@ -4,8 +4,9 @@ import InvestmentForm from "./InvestmentForm";
 
 function EditInv({ closeModal, children, deleteInv, onEdit }) {
   return (
-    <Modal title="Update Investment" closeModal={closeModal}>
+    <Modal closeModal={closeModal}>
       <InvestmentForm
+        formHeader="Please update values"
         cancelHandler={closeModal}
         prefilled={children}
         firstBtnLabel="Update Investment"
