@@ -30,8 +30,11 @@ function InvestmentForm({
     <form>
       <h2>{formHeader}</h2>
       <FormControl
+        controlClassName="investment-form-control"
+        labelClassName="investment-form-label"
         labelFor="ticker"
         labelValue="Use link"
+        inputClassName="investment-form-input"
         inputId="ticker"
         inputName="ticker"
         inputType="text"
@@ -42,9 +45,12 @@ function InvestmentForm({
       />
 
       <FormControl
+        controlClassName="investment-form-control"
+        labelClassName="investment-form-label"
         labelFor="targetAllocation"
         labelValue="Please enter percent Value (%)"
         inputId="targeAllocation"
+        inputClassName="investment-form-input"
         inputName="targetAllocation"
         inputType="text"
         inputPlaceholder="Target Allocation"
@@ -54,9 +60,12 @@ function InvestmentForm({
       />
 
       <FormControl
+        controlClassName="investment-form-control"
+        labelClassName="investment-form-label"
         labelFor="units"
         labelValue="Fractional units not permitted"
         inputId="units"
+        inputClassName="investment-form-input"
         inputName="units"
         inputType="text"
         inputPlaceholder="Units"
@@ -65,14 +74,14 @@ function InvestmentForm({
         inputOnChangeHandler={onChangeHandler}
       />
       <FormButton
-        btnId="form-btn"
+        btnClassName="investment-form-btn"
         btnType="button"
         btnText={firstBtnLabel}
         btnClickHandler={firstBtnAction}
         btnData={investment}
       />
       <FormButton
-        btnId="form-btn"
+        btnClassName="investment-form-btn"
         btnType="button"
         btnText={secondBtnLabel}
         btnClickHandler={secondBtnAction}

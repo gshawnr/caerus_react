@@ -1,0 +1,28 @@
+div.login-form {
+  min-height: 500px;
+}
+
+.login-form {
+  background-color: #f9f9f9;
+  border-radius: 25px;
+  margin: 10% auto;
+  max-width: 30%;
+  min-width: 30%;
+  padding: 3% 2%;
+}
+
+.login-form h2 {
+  margin: 5px auto;
+  padding-bottom: 30px;
+  text-align: center;
+}
+
+.register-link {
+  margin-top: 10%;
+  text-align: right;
+}
+
+div.login-form a {
+  color: blue;
+  font-size: medium;
+}

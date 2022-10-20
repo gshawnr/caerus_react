@@ -1,0 +1,22 @@
+*,
+*:before,
+*:after {
+  box-sizing: border-box;
+}
+
+body {
+  background-color: #c3ff99;
+  margin: 0 auto;
+  padding: 25px;
+}
+
+a {
+  color: green;
+  font-size: x-large;
+  margin: 0 2rem;
+}
+
+nav {
+  display: flex;
+  justify-content: center;
+}

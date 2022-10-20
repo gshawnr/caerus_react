@@ -3,6 +3,7 @@ import "./Investments.css";
 import Table from "./Table";
 import AddModal from "./AddModal";
 import EditModal from "./EditModal";
+import FormButton from "./FormButton";
 import {
   calculateTableData,
   investmentFormatter,
@@ -143,7 +144,7 @@ function Home() {
             </EditModal>
           )}
           <Table handleRowClick={handleEditInvestment} data={investments} />
-          <button onClick={handleAddBtn}>Add</button>
+          <FormButton btnClickHandler={handleAddBtn} btnText="Add" />
         </div>
       )}
     </div>
