@@ -1,0 +1,9 @@
+Phase 1
+1. add error component
+2. make app responsive
+3. handle currency differences
+4. investigate other apis (interactive brokers)
+
+Phase 2
+1. Add retirement planning component with  link to portfolio value
+2. Add stock analysis api

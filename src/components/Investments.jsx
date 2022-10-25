@@ -1,14 +1,25 @@
 import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import CircularIndeterminate from "./CircularIndeterminate";
 import "./Investments.css";
 import Table from "./Table";
 import AddModal from "./AddModal";
 import EditModal from "./EditModal";
 import FormButton from "./FormButton";
+import ErrorModal from "./ErrorModal";
 import {
   calculateTableData,
   investmentFormatter,
 } from "../services/CalculationService";
 import { apiCall } from "../services/ApiServices";
+import { Navigate } from "react-router-dom";
+
+const delay = async (ms) =>
+  new Promise((res, rej) => {
+    setTimeout(() => {
+      res();
+    }, ms);
+  });
 
 function Home() {
   const [investments, setInvestments] = useState([]);
@@ -18,18 +29,23 @@ function Home() {
   const [fetchErrorCode, setFetchErrorCode] = useState(null);
   const [addModal, setAddModal] = useState(false);
   const [openEditModal, setOpenEditModal] = useState(false);
+  const [openErrorModal, setOpenErrorModal] = useState(false);
   const [editInv, setEditInv] = useState(null);
+
+  const navigate = useNavigate();
 
   useEffect(() => {
     const getInvestment = async () => {
       try {
-        const items = await apiCall(
-          `${process.env.REACT_APP_BASEURL}/investments`,
-          "GET"
-        );
-        const updatedInv = await calculateTableData(items);
+        // add min delay to clearly show loading and improve UX
+        const [delayResponse, items] = await Promise.all([
+          delay(700),
+          apiCall(`${process.env.REACT_APP_BASEURL}/investments`, "GET"),
+        ]);
 
-        setInvestments(updatedInv);
+        const { portfolioValue, dataArr } = calculateTableData(items);
+
+        setInvestments(dataArr);
         setFetchErrorMsg(null);
         setFetchErrorCode(null);
         setIsLoaded(true);
@@ -62,6 +78,7 @@ function Home() {
         JSON.stringify(inv)
       );
 
+      setIsLoaded(false);
       setAddModal(false);
       setRefreshApp(true);
     } catch (err) {
@@ -78,6 +95,7 @@ function Home() {
       );
 
       setOpenEditModal(false);
+      setIsLoaded(false);
       setRefreshApp(true);
     } catch (err) {
       console.log("delete error: ", err);
@@ -103,6 +121,7 @@ function Home() {
       JSON.stringify(obj)
     );
 
+    setIsLoaded(false);
     setRefreshApp(true);
   };
 
@@ -118,12 +137,19 @@ function Home() {
     });
   };
 
+  const toggleErrorModal = () => {
+    navigate("/");
+  };
+
   return (
     <div className="Parent">
       {!isLoaded && !fetchErrorMsg ? (
-        <span> </span> // decide how to handle the initial load
+        <CircularIndeterminate />
       ) : fetchErrorMsg && fetchErrorCode === 401 ? (
-        <h3>Session Expired. Please login again.</h3>
+        <ErrorModal
+          closeErrorModal={toggleErrorModal}
+          message="Session Expired.  Please login again."
+        />
       ) : fetchErrorMsg ? (
         <h3>Error loading page. Please try back later.</h3>
       ) : (

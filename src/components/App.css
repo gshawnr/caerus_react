@@ -4,14 +4,25 @@
   box-sizing: border-box;
 }
 
+h1,
+h2,
+h3,
+h4,
+h5,
+p,
+a {
+  font-family: "Ubuntu", sans-serif;
+}
+/* font-family: 'Montserrat', sans-serif; */
+
 body {
-  background-color: #c3ff99;
+  background-color: #00abb3;
   margin: 0 auto;
-  padding: 25px;
+  min-height: 100vh;
 }
 
 a {
-  color: green;
+  color: #eaeaea;
   font-size: x-large;
   margin: 0 2rem;
 }
@@ -19,4 +30,8 @@ a {
 nav {
   display: flex;
   justify-content: center;
+}
+
+* {
+  /* color: #3c4048; */
 }
