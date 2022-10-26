@@ -48,7 +48,7 @@ function RegisterForm() {
   return (
     <div className="register-form access-div>">
       <h2>Create an Account</h2>
-      <form onSubmit={() => onSubmit()}>
+      <form onSubmit={onSubmit}>
         <FormControl
           inputOnChangeHandler={onChange}
           inputName="email"
@@ -67,12 +67,7 @@ function RegisterForm() {
           inputRequired={true}
         />
 
-        <FormButton btnText="Register" />
-        {fetchErrorMsg && (
-          <h3 style={{ color: "red", textAlign: "center" }}>
-            Error registering user: {fetchErrorMsg}
-          </h3>
-        )}
+        <FormButton btnText="Register" type="submit" />
       </form>
     </div>
   );

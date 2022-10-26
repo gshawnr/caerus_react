@@ -18,6 +18,7 @@ const LoginForm = () => {
   };
 
   const onSubmit = async (e) => {
+    console.log("login called");
     e.preventDefault();
 
     const response = await fetch(
