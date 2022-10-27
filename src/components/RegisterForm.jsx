@@ -21,14 +21,11 @@ function RegisterForm() {
   const onSubmit = async (e) => {
     try {
       e.preventDefault();
-      const res = await fetch(
-        `${process.env.REACT_APP_LOCAL_OFFLINE_BASEURL}/register`,
-        {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ email: user.email, password: user.password }),
-        }
-      );
+      const res = await fetch(`${process.env.REACT_APP_BE_BASEURL}/register`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email: user.email, password: user.password }),
+      });
 
       if (res.status != 200) throw new Error(res.statusText);
 

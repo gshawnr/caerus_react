@@ -9,9 +9,7 @@ function Table({
   handleCellClick = null,
   rowEditable = false,
 }) {
-  const col_str = headerStr
-    ? headerStr
-    : process.env.REACT_APP_LOCAL_TABLE_COLS;
+  const col_str = headerStr ? headerStr : process.env.REACT_APP_TABLE_COLS;
   const col_headers = col_str.split(",");
 
   const handleColClick = (e) => {

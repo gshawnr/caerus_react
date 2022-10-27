@@ -40,10 +40,7 @@ function Home() {
         // add min delay to clearly show loading and improve UX
         const [delayResponse, items] = await Promise.all([
           delay(700),
-          apiCall(
-            `${process.env.REACT_APP_LOCAL_OFFLINE_BASEURL}/investments`,
-            "GET"
-          ),
+          apiCall(`${process.env.REACT_APP_BE_BASEURL}/investments`, "GET"),
         ]);
 
         const { portfolioValue, dataArr } = calculateTableData(items);
@@ -76,7 +73,7 @@ function Home() {
       inv = investmentFormatter(inv);
 
       await apiCall(
-        `${process.env.REACT_APP_LOCAL_OFFLINE_BASEURL}/equities/add`,
+        `${process.env.REACT_APP_BE_BASEURL}/equities/add`,
         "POST",
         JSON.stringify(inv)
       );
@@ -92,7 +89,7 @@ function Home() {
   const handleDeleteInvestment = async (inv) => {
     try {
       await apiCall(
-        `${process.env.REACT_APP_LOCAL_OFFLINE_BASEURL}/equities/remove`,
+        `${process.env.REACT_APP_BE_BASEURL}/equities/remove`,
         "POST",
         JSON.stringify({ ticker: inv.ticker })
       );
@@ -119,7 +116,7 @@ function Home() {
     obj = investmentFormatter(obj);
 
     await apiCall(
-      `${process.env.REACT_APP_LOCAL_OFFLINE_BASEURL}/equities/edit`,
+      `${process.env.REACT_APP_BE_BASEURL}/equities/edit`,
       "PUT",
       JSON.stringify(obj)
     );

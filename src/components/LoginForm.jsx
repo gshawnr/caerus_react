@@ -21,17 +21,14 @@ const LoginForm = () => {
     console.log("login called");
     e.preventDefault();
 
-    const response = await fetch(
-      `${process.env.REACT_APP_LOCAL_OFFLINE_BASEURL}/login`,
-      {
-        headers: {
-          Authorization: "Bearer 1234Test",
-          "Content-Type": "application/json",
-        },
-        method: "POST",
-        body: JSON.stringify({ email: user.email, password: user.password }),
-      }
-    );
+    const response = await fetch(`${process.env.REACT_APP_BE_BASEURL}/login`, {
+      headers: {
+        Authorization: "Bearer 1234Test",
+        "Content-Type": "application/json",
+      },
+      method: "POST",
+      body: JSON.stringify({ email: user.email, password: user.password }),
+    });
 
     const { accessToken } = await response.json();
     localStorage.setItem("investmentsToken", accessToken);
