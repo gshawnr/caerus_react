@@ -22,7 +22,7 @@ function RegisterForm() {
     try {
       e.preventDefault();
       const res = await fetch(
-        `${process.env.REACT_APP_LOCAL_BE_BASEURL}/register`,
+        `${process.env.REACT_APP_LOCAL_OFFLINE_BASEURL}/register`,
         {
           method: "POST",
           headers: { "Content-Type": "application/json" },

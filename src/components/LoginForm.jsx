@@ -22,7 +22,7 @@ const LoginForm = () => {
     e.preventDefault();
 
     const response = await fetch(
-      `${process.env.REACT_APP_LOCAL_BE_BASEURL}/login`,
+      `${process.env.REACT_APP_LOCAL_OFFLINE_BASEURL}/login`,
       {
         headers: {
           Authorization: "Bearer 1234Test",
