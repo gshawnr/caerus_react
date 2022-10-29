@@ -1,14 +1,18 @@
+import "./FormInput.css";
+
 const FormInput = ({
-  inputId,
+  inputId = null,
+  inputClassName = null,
   inputName,
-  inputPlaceholder,
-  inputValue,
-  inputRequired,
-  inputType,
-  inputOnChangeHandler,
+  inputPlaceholder = null,
+  inputValue = null,
+  inputRequired = false,
+  inputType = "text",
+  inputOnChangeHandler = null,
 }) => {
   return (
     <input
+      className={inputClassName ? `form-input ${inputClassName}` : "form-input"}
       id={inputId}
       name={inputName}
       placeholder={inputPlaceholder}

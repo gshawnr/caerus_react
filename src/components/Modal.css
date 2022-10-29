@@ -17,14 +17,14 @@ button {
 }
 
 .modalContainer {
-  background-color: #fff;
+  background-color: #eaeaea;
   justify-content: center;
   align-items: center;
   width: 800px;
   border-radius: 10px;
   padding: 1% 2%;
   border-style: solid;
-  border-color: #3d8361;
+  border-color: #3c4048;
 }
 
 .modalCloseBtn {
@@ -40,7 +40,7 @@ button {
 
 .modalContent {
   text-align: center;
-  background-color: #c3ff99;
+  background-color: #00abb3;
   border-radius: 10px;
   height: 60%;
   margin-bottom: 3%;

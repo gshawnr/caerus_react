@@ -12,16 +12,18 @@ export const calculateTableData = (dataArr) => {
   for (let inv of dataArr) {
     const { value } = inv;
     let percent = (value / portfolioValue) * 100 || 0;
-    let roundedPercent = roundHelper(percent);
+    let roundedPercent = roundHelper(percent, 2);
     inv.currentAllocation = roundedPercent;
 
     inv["buy/sell"] = roundHelper(
       portfolioValue * ((inv.targetAllocation - inv.currentAllocation) / 100),
       2
     );
+
+    inv["buy/sell (units)"] = roundHelper(inv["buy/sell"] / inv.unitPrice, 2);
   }
 
-  return dataArr;
+  return { portfolioValue, dataArr };
 };
 
 export const investmentFormatter = (inv) => {
@@ -34,18 +36,18 @@ export const investmentFormatter = (inv) => {
 
   if (targetAllocation !== null) {
     // assumes percent string to number converstion
-    inv.targetAllocation = roundHelper(targetAllocation, 0);
+    inv.targetAllocation = roundHelper(targetAllocation, 2);
   }
   if (units !== null) {
     inv.units = roundHelper(units, 0);
   }
 
   if (currentAllocation !== null) {
-    inv.currentAllocation = roundHelper(currentAllocation, 0);
+    inv.currentAllocation = roundHelper(currentAllocation, 2);
   }
 
   if (unitPrice !== null) {
-    inv.unitPrice = roundHelper(unitPrice, 0);
+    inv.unitPrice = roundHelper(unitPrice, 2);
   }
 
   return inv;

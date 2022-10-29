@@ -1,0 +1,10 @@
+.form-input {
+  display: block;
+  background-color: #eaeaea;
+  /* border-radius: 5px; */
+  width: 90%;
+  font-size: 20px;
+  height: 20px;
+  padding: 5%;
+  margin: 30px auto;
+}

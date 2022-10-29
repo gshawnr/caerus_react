@@ -1,0 +1,18 @@
+div.register-form {
+  min-height: 500px;
+}
+
+.register-form {
+  background-color: #f9f9f9;
+  border-radius: 25px;
+  margin: 10% auto;
+  max-width: 30%;
+  min-width: 30%;
+  padding: 3% 2%;
+}
+
+.register-form h2 {
+  margin: 5px auto;
+  padding-bottom: 30px;
+  text-align: center;
+}

@@ -1,15 +1,15 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
 import { BrowserRouter } from "react-router-dom";
-import App from "./App";
+import App from "./components/App";
 import reportWebVitals from "./reportWebVitals";
 import Nav from "./components/Nav";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
-    <Nav />
     <BrowserRouter>
+      <Nav />
       <App />
     </BrowserRouter>
   </React.StrictMode>

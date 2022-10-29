@@ -1,9 +1,54 @@
-.tableContainer {
-  height: 500px;
-  margin: 5% 15%;
+h1 {
+  text-align: center;
 }
 
-.tableContainer button {
-  width: 100%;
-  margin-top: 3px;
+p {
+  line-height: 1.5rem;
+}
+
+.home-container {
+  /* display: flex; */
+  /* align-items: center; */
+}
+section {
+  min-height: 300px;
+}
+
+.home-section {
+  color: #eef2e6;
+  display: flex;
+  justify-content: space-around;
+  /* align-items: center; */
+  width: 75%;
+  margin: 0 auto 2%;
+}
+
+.home-intro {
+  width: 25%;
+}
+
+.home-details {
+  display: flex;
+  background-color: #eef2e6;
+  justify-content: space-around;
+  padding: 4%;
+}
+
+.home-details > div {
+  width: 30%;
+}
+
+.home-contact {
+  color: #eef2e6;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+
+footer {
+  background-color: #eef2e6;
+  min-height: 70px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }

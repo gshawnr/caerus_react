@@ -1,16 +1,11 @@
 .tableClass {
-  /* display: flex; */
-  /* justify-content: center; */
-  /* align-items: flex-start; */
-  background-color: snow;
+  background-color: #eaeaea;
 }
 
 table {
-  /* table-layout: fixed; */
   width: 100%;
   border-collapse: collapse;
   border: 3px solid black;
-  /* padding: 1rem; */
   font-size: larger;
 }
 
@@ -25,12 +20,5 @@ tbody td {
 }
 
 tbody tr th {
-  /* width: 9%; */
   border: solid thin lightgray;
-}
-tbody tr th:nth-child(4) {
-  /* width: 13%; */
-}
-tbody tr th:nth-child(5) {
-  /* width: 13%; */
 }

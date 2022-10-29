@@ -1,3 +1,5 @@
+import "./FormButton.css";
+
 const FormButton = ({
   btnId = null,
   btnClassName = null,
@@ -9,7 +11,7 @@ const FormButton = ({
   return (
     <button
       id={btnId}
-      className={btnClassName}
+      className={btnClassName ? `form-button ${btnClassName}` : "form-button"}
       type={btnType}
       onClick={() => btnClickHandler && btnClickHandler(btnData)}
     >
