@@ -21,7 +21,7 @@ const LoginForm = () => {
     console.log("login called");
     e.preventDefault();
 
-    const response = await fetch(`${process.env.REACT_APP_BE_BASEURL}/login`, {
+    const response = await fetch(`/api/login`, {
       headers: {
         Authorization: "Bearer 1234Test",
         "Content-Type": "application/json",

@@ -40,7 +40,7 @@ function Home() {
         // add min delay to clearly show loading and improve UX
         const [delayResponse, items] = await Promise.all([
           delay(700),
-          apiCall(`${process.env.REACT_APP_BE_BASEURL}/investments`, "GET"),
+          apiCall(`/api/investments`, "GET"),
         ]);
 
         const { portfolioValue, dataArr } = calculateTableData(items);
@@ -72,11 +72,7 @@ function Home() {
     try {
       inv = investmentFormatter(inv);
 
-      await apiCall(
-        `${process.env.REACT_APP_BE_BASEURL}/equities/add`,
-        "POST",
-        JSON.stringify(inv)
-      );
+      await apiCall(`/api/equities/add`, "POST", JSON.stringify(inv));
 
       setIsLoaded(false);
       setAddModal(false);
@@ -89,7 +85,7 @@ function Home() {
   const handleDeleteInvestment = async (inv) => {
     try {
       await apiCall(
-        `${process.env.REACT_APP_BE_BASEURL}/equities/remove`,
+        `/api/equities/remove`,
         "POST",
         JSON.stringify({ ticker: inv.ticker })
       );
@@ -115,11 +111,7 @@ function Home() {
     closeEditModal();
     obj = investmentFormatter(obj);
 
-    await apiCall(
-      `${process.env.REACT_APP_BE_BASEURL}/equities/edit`,
-      "PUT",
-      JSON.stringify(obj)
-    );
+    await apiCall(`/api/equities/edit`, "PUT", JSON.stringify(obj));
 
     setIsLoaded(false);
     setRefreshApp(true);
