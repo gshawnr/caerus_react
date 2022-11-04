@@ -34,13 +34,15 @@ function Home() {
 
   const navigate = useNavigate();
 
+  const local = "http://localhost:5000/api/";
+
   useEffect(() => {
     const getInvestment = async () => {
       try {
         // add min delay to clearly show loading and improve UX
         const [delayResponse, items] = await Promise.all([
           delay(700),
-          apiCall(`/api/investments`, "GET"),
+          apiCall(local + "investments", "GET"),
         ]);
 
         const { portfolioValue, dataArr } = calculateTableData(items);
@@ -72,7 +74,7 @@ function Home() {
     try {
       inv = investmentFormatter(inv);
 
-      await apiCall(`/api/equities/add`, "POST", JSON.stringify(inv));
+      await apiCall(local + "equities/add", "POST", JSON.stringify(inv));
 
       setIsLoaded(false);
       setAddModal(false);
@@ -85,7 +87,7 @@ function Home() {
   const handleDeleteInvestment = async (inv) => {
     try {
       await apiCall(
-        `/api/equities/remove`,
+        local + "equities/remove",
         "POST",
         JSON.stringify({ ticker: inv.ticker })
       );
@@ -111,7 +113,7 @@ function Home() {
     closeEditModal();
     obj = investmentFormatter(obj);
 
-    await apiCall(`/api/equities/edit`, "PUT", JSON.stringify(obj));
+    await apiCall(local + "equities/edit", "PUT", JSON.stringify(obj));
 
     setIsLoaded(false);
     setRefreshApp(true);
@@ -134,7 +136,7 @@ function Home() {
   };
 
   return (
-    <div className="Parent">
+    <div className="investment-container">
       {!isLoaded && !fetchErrorMsg ? (
         <CircularIndeterminate />
       ) : fetchErrorMsg && fetchErrorCode === 401 ? (

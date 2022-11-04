@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import FormControl from "./FormControl";
 import FormButton from "./FormButton";
+import Footer from "./Footer";
 
 import("./LoginForm.css");
 
@@ -21,7 +22,7 @@ const LoginForm = () => {
     console.log("login called");
     e.preventDefault();
 
-    const response = await fetch(`/api/login`, {
+    const response = await fetch("http://localhost:5000/api/login", {
       headers: {
         Authorization: "Bearer 1234Test",
         "Content-Type": "application/json",
@@ -38,30 +39,32 @@ const LoginForm = () => {
   };
 
   return (
-    <div className="login-form access-div">
-      <h2>Log Into Your Account</h2>
-      <form onSubmit={onSubmit}>
-        <FormControl
-          inputOnChangeHandler={onChange}
-          inputName="email"
-          inputType="email"
-          inputPlaceholder="Email"
-          inputValue={user.email}
-          inputRequired
-        />
-        <FormControl
-          inputName="password"
-          inputType="password"
-          inputPlaceholder="Password"
-          inputValue={user.password}
-          inputOnChangeHandler={onChange}
-          inputRequired
-        />
-        <FormButton btnText="Sign In" type="submit" />
-        <div className="register-link">
-          <a href="/register">Create an account</a>
-        </div>
-      </form>
+    <div className="login-form-body">
+      <div className="login-form access-div">
+        <h2>Log Into Your Account</h2>
+        <form onSubmit={onSubmit}>
+          <FormControl
+            inputOnChangeHandler={onChange}
+            inputName="email"
+            inputType="email"
+            inputPlaceholder="Email"
+            inputValue={user.email}
+            inputRequired
+          />
+          <FormControl
+            inputName="password"
+            inputType="password"
+            inputPlaceholder="Password"
+            inputValue={user.password}
+            inputOnChangeHandler={onChange}
+            inputRequired
+          />
+          <FormButton btnText="Sign In" type="submit" />
+          <div className="register-link">
+            <a href="/register">Create an account</a>
+          </div>
+        </form>
+      </div>
     </div>
   );
 };

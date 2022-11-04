@@ -44,11 +44,3 @@ section {
   justify-content: space-around;
   align-items: center;
 }
-
-footer {
-  background-color: #eef2e6;
-  min-height: 70px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}

@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import "./InvestmentForm.css";
 import FormControl from "./FormControl";
 import FormButton from "./FormButton";
+import Footer from "./Footer";
 
 function InvestmentForm({
   formHeader = null,

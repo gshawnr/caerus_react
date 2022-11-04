@@ -21,7 +21,7 @@ function RegisterForm() {
   const onSubmit = async (e) => {
     try {
       e.preventDefault();
-      const res = await fetch(`/api/register`, {
+      const res = await fetch("http://localhost:5000/api/register", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email: user.email, password: user.password }),
@@ -43,29 +43,31 @@ function RegisterForm() {
   };
 
   return (
-    <div className="register-form access-div>">
-      <h2>Create an Account</h2>
-      <form onSubmit={onSubmit}>
-        <FormControl
-          inputOnChangeHandler={onChange}
-          inputName="email"
-          inputType="email"
-          inputPlaceholder="Email"
-          inputValue={user.email}
-          inputRequired={true}
-        />
+    <div className="register-form-body">
+      <div className="register-form access-div>">
+        <h2>Create an Account</h2>
+        <form onSubmit={onSubmit}>
+          <FormControl
+            inputOnChangeHandler={onChange}
+            inputName="email"
+            inputType="email"
+            inputPlaceholder="Email"
+            inputValue={user.email}
+            inputRequired={true}
+          />
 
-        <FormControl
-          inputOnChangeHandler={onChange}
-          inputName="password"
-          inputType="password"
-          inputPlaceholder="Password"
-          inputValue={user.password}
-          inputRequired={true}
-        />
+          <FormControl
+            inputOnChangeHandler={onChange}
+            inputName="password"
+            inputType="password"
+            inputPlaceholder="Password"
+            inputValue={user.password}
+            inputRequired={true}
+          />
 
-        <FormButton btnText="Register" type="submit" />
-      </form>
+          <FormButton btnText="Register" type="submit" />
+        </form>
+      </div>
     </div>
   );
 }
