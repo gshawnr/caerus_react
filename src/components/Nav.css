@@ -16,3 +16,9 @@ a:hover {
   text-decoration: underline;
   font-weight: bolder;
 }
+
+@media (max-width: 700px) {
+  nav {
+    display: none;
+  }
+}

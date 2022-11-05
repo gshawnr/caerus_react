@@ -4,6 +4,7 @@ import LinkedInIcon from "@mui/icons-material/LinkedIn";
 import GitHubIcon from "@mui/icons-material/GitHub";
 import EmailIcon from "@mui/icons-material/Email";
 import WebIcon from "@mui/icons-material/Web";
+
 import "./Home.css";
 
 const Home = () => {
@@ -98,7 +99,7 @@ const Home = () => {
             JWTs RESTful CRUD apis Custom CSS Responsive web app (in progress)
           </p>
         </div>
-        <div>
+        <div className="details-frontend">
           <h1>Server-Side App</h1>
           <p>
             Lorem ipsum dolor sit amet consectetur adipisicing elit. Id
@@ -122,9 +123,6 @@ const Home = () => {
           <WebIcon sx={{ fontSize: 70, color: "#eaeaea" }} />
         </a>
       </section>
-      <footer>
-        <p>copyright &copy; GSR</p>
-      </footer>
     </div>
   );
 };

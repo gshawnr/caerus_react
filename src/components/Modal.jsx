@@ -6,9 +6,11 @@ function Modal({ closeModal, children }) {
   return (
     <div className="modal">
       <div className="modalContainer">
-        <button className="modalCloseBtn" onClick={() => closeModal()}>
-          {<CloseIcon />}
-        </button>
+        <div className="modalClsBtnContainer">
+          <button className="modalCloseBtn" onClick={() => closeModal()}>
+            {<CloseIcon />}
+          </button>
+        </div>
         <div className="modalContent">{children}</div>
       </div>
     </div>
