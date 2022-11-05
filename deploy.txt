@@ -1,0 +1,2 @@
+Required updates for deployment:
+1. apis/backend.js: baseURL updated to proper url
