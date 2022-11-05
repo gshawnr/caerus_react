@@ -6,10 +6,6 @@ p {
   line-height: 1.5rem;
 }
 
-.home-container {
-  /* display: flex; */
-  /* align-items: center; */
-}
 section {
   min-height: 300px;
 }
@@ -18,7 +14,6 @@ section {
   color: #eef2e6;
   display: flex;
   justify-content: space-around;
-  /* align-items: center; */
   width: 75%;
   margin: 0 auto 2%;
 }
@@ -34,7 +29,7 @@ section {
   padding: 4%;
 }
 
-.home-details > div {
+.details-frontend {
   width: 30%;
 }
 
@@ -43,4 +38,15 @@ section {
   display: flex;
   justify-content: space-around;
   align-items: center;
+}
+
+@media (max-width: 1000px) {
+  .home-section,
+  .home-details {
+    display: block;
+  }
+  .home-intro,
+  .details-frontend {
+    width: 100%;
+  }
 }

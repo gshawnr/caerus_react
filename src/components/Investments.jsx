@@ -11,15 +11,11 @@ import {
   calculateTableData,
   investmentFormatter,
 } from "../services/CalculationService";
-import { apiCall } from "../services/ApiServices";
-import { Navigate } from "react-router-dom";
-
-const delay = async (ms) =>
-  new Promise((res, rej) => {
-    setTimeout(() => {
-      res();
-    }, ms);
-  });
+import {
+  getBackendApi,
+  putBackendApi,
+  postBackendApi,
+} from "../services/ApiServices";
 
 function Home() {
   const [investments, setInvestments] = useState([]);
@@ -29,23 +25,15 @@ function Home() {
   const [fetchErrorCode, setFetchErrorCode] = useState(null);
   const [addModal, setAddModal] = useState(false);
   const [openEditModal, setOpenEditModal] = useState(false);
-  const [openErrorModal, setOpenErrorModal] = useState(false);
   const [editInv, setEditInv] = useState(null);
 
   const navigate = useNavigate();
 
-  const local = "http://localhost:5000/api/";
-
   useEffect(() => {
     const getInvestment = async () => {
       try {
-        // add min delay to clearly show loading and improve UX
-        const [delayResponse, items] = await Promise.all([
-          delay(700),
-          apiCall(local + "investments", "GET"),
-        ]);
-
-        const { portfolioValue, dataArr } = calculateTableData(items);
+        const data = await getBackendApi();
+        const { dataArr } = calculateTableData(data);
 
         setInvestments(dataArr);
         setFetchErrorMsg(null);
@@ -53,9 +41,9 @@ function Home() {
         setIsLoaded(true);
         setRefreshApp(false);
       } catch (err) {
-        console.log(JSON.stringify(err));
-        const { message = "error fetching data", statusCode = 500 } =
-          JSON.parse(err.message) || {};
+        const { message = "error fetching investment data", statusCode = 500 } =
+          err;
+
         setFetchErrorMsg(message);
         setFetchErrorCode(statusCode);
         setIsLoaded(false);
@@ -74,33 +62,41 @@ function Home() {
     try {
       inv = investmentFormatter(inv);
 
-      await apiCall(local + "equities/add", "POST", JSON.stringify(inv));
+      await postBackendApi("equities/add", inv);
 
       setIsLoaded(false);
       setAddModal(false);
       setRefreshApp(true);
     } catch (err) {
-      console.log("error adding investment", err.status, err.message);
+      const { message = "error fetching investment data", statusCode = 500 } =
+        err;
+
+      setFetchErrorMsg(message);
+      setFetchErrorCode(statusCode);
+      setIsLoaded(false);
+      setRefreshApp(false);
     }
   };
 
   const handleDeleteInvestment = async (inv) => {
     try {
-      await apiCall(
-        local + "equities/remove",
-        "POST",
-        JSON.stringify({ ticker: inv.ticker })
-      );
+      await postBackendApi("equities/remove", { ticker: inv.ticker });
 
       setOpenEditModal(false);
       setIsLoaded(false);
       setRefreshApp(true);
     } catch (err) {
-      console.log("delete error: ", err);
+      const { message = "error fetching investment data", statusCode = 500 } =
+        err;
+
+      setFetchErrorMsg(message);
+      setFetchErrorCode(statusCode);
+      setIsLoaded(false);
+      setRefreshApp(false);
     }
   };
 
-  const handleEditInvestment = async (obj) => {
+  const openEditInvestment = async (obj) => {
     try {
       setEditInv(obj);
       setOpenEditModal(true);
@@ -113,7 +109,7 @@ function Home() {
     closeEditModal();
     obj = investmentFormatter(obj);
 
-    await apiCall(local + "equities/edit", "PUT", JSON.stringify(obj));
+    await putBackendApi("equities/edit", obj);
 
     setIsLoaded(false);
     setRefreshApp(true);
@@ -135,17 +131,22 @@ function Home() {
     navigate("/");
   };
 
+  // set display message if error
+  if (fetchErrorCode) {
+    var displayMsg = "Oops something went wrong.  Please try back later";
+
+    if (fetchErrorCode === 401)
+      displayMsg = "Session Expired.  Please login again.";
+    if (fetchErrorCode === 404)
+      displayMsg = "Not found.  Please register or login.";
+  }
+
   return (
     <div className="investment-container">
       {!isLoaded && !fetchErrorMsg ? (
         <CircularIndeterminate />
-      ) : fetchErrorMsg && fetchErrorCode === 401 ? (
-        <ErrorModal
-          closeErrorModal={toggleErrorModal}
-          message="Session Expired.  Please login again."
-        />
       ) : fetchErrorMsg ? (
-        <h3>Error loading page. Please try back later.</h3>
+        <ErrorModal closeErrorModal={toggleErrorModal} message={displayMsg} />
       ) : (
         <div className="tableContainer">
           {addModal && (
@@ -163,7 +164,7 @@ function Home() {
               {editInv}
             </EditModal>
           )}
-          <Table handleRowClick={handleEditInvestment} data={investments} />
+          <Table handleRowClick={openEditInvestment} data={investments} />
           <FormButton btnClickHandler={handleAddBtn} btnText="Add" />
         </div>
       )}

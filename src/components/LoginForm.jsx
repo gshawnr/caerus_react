@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { postBackendApi } from "../services/ApiServices";
 import FormControl from "./FormControl";
 import FormButton from "./FormButton";
-import Footer from "./Footer";
 
 import("./LoginForm.css");
 
@@ -19,23 +19,24 @@ const LoginForm = () => {
   };
 
   const onSubmit = async (e) => {
-    console.log("login called");
     e.preventDefault();
 
-    const response = await fetch("http://localhost:5000/api/login", {
-      headers: {
-        Authorization: "Bearer 1234Test",
-        "Content-Type": "application/json",
-      },
-      method: "POST",
-      body: JSON.stringify({ email: user.email, password: user.password }),
-    });
+    try {
+      const { accessToken = null } = await postBackendApi("login", {
+        email: user.email,
+        password: user.password,
+      });
 
-    const { accessToken } = await response.json();
-    localStorage.setItem("investmentsToken", accessToken);
+      localStorage.setItem("investmentsToken", accessToken);
 
-    setUser({ email: "", password: "" });
-    navigate("/", { replace: true });
+      setUser({ email: "", password: "" });
+      navigate("/", { replace: true });
+    } catch (err) {
+      const { message, statusCode = 500 } = err;
+      // TODO set error modal
+
+      localStorage.setItem("investmentsToken", null);
+    }
   };
 
   return (
