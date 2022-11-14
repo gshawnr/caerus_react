@@ -47,10 +47,10 @@ const Home = () => {
             {moreHow && (
               <span>
                 allocation. I have created a demo user that can be used to sign
-                in and explore the app: Username=demoUser,
-                Password=demoPass@email.com. Once on the main table, you are
-                able to delete, edit or add new investments. The price data for
-                each investment is updated periodically.{" "}
+                in and explore the app: Username=demoUser@email.com,
+                Password=demoPass. Once on the main table, you are able to
+                delete, edit or add new investments. The price data for each
+                investment is updated periodically.{" "}
               </span>
             )}
           </p>
