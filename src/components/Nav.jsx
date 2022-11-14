@@ -4,6 +4,7 @@ import "./Nav.css";
 
 function Nav() {
   const [activePath, setActivePath] = useState("");
+  const [navlinksClass, setNavlinksClass] = useState("navlinks");
   let location = useLocation();
 
   useEffect(() => {
@@ -18,17 +19,33 @@ function Nav() {
     { name: "Register", path: "/register" },
   ];
 
+  const navExpand = (e) => {
+    e.preventDefault();
+    console.log("clicked");
+    setNavlinksClass((prev) => {
+      if (prev === "navlinks") return "navlinks navlinks-expand";
+      else return "navlinks";
+    });
+  };
+
   return (
     <nav>
-      {links.map((thisLink) => (
-        <a
-          key={thisLink.name}
-          className={activePath === thisLink.path ? "active-link" : ""}
-          href={thisLink.path}
-        >
-          {thisLink.name}
+      <div className="navbar">
+        <a href="#" className="hamburger" onClick={navExpand}>
+          <i className="fa fa-bars" aria-hidden="true"></i>
         </a>
-      ))}
+        <div className={navlinksClass}>
+          {links.map((thisLink) => (
+            <a
+              key={thisLink.name}
+              className={activePath === thisLink.path ? "active-link" : ""}
+              href={thisLink.path}
+            >
+              {thisLink.name}
+            </a>
+          ))}
+        </div>
+      </div>
     </nav>
   );
 }

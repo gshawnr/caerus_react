@@ -4,12 +4,23 @@ nav {
   justify-content: center;
 }
 
+.hamburger {
+  display: none;
+}
+
 nav a {
   text-decoration: none;
+  display: block;
+  padding: 1%;
 }
 
 a:hover {
   text-decoration: underline;
+}
+
+.navlinks {
+  display: flex;
+  justify-content: center;
 }
 
 .active-link {
@@ -19,6 +30,22 @@ a:hover {
 
 @media (max-width: 700px) {
   nav {
+    /* display: none; */
+  }
+}
+
+@media (max-width: 700px) {
+  nav {
+    justify-content: start;
+    margin: 5%;
+  }
+  .hamburger {
+    display: block;
+  }
+  .navlinks {
     display: none;
+  }
+  .navlinks-expand {
+    display: block;
   }
 }

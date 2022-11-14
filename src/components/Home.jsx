@@ -19,12 +19,12 @@ const Home = () => {
             <span style={{ fontSize: 19, fontWeight: "bold" }}>
               Please note{" "}
             </span>{" "}
-            this website is a work in progress. It was designed as a tool to
-            facilitate rebalancing an investment portfolio. It replaces the
-            manual process of looking up security prices and updating data
-            tables to calculate the allocation of each investment. Due to limits
-            on the free tier used for fetching investment price data, this site
-            is currently only for demo purposes.
+            this website is a work in progress. It's purpose is to aid in
+            rebalancing an investment portfolio. It replaces the manual process
+            of looking up security prices and updating data tables to calculate
+            the allocation of each investment. Due to limits on the free tier
+            used for fetching investment price data, this site is currently only
+            for demo purposes.
           </p>
         </div>
         <div className="home-intro">
@@ -47,10 +47,10 @@ const Home = () => {
             {moreHow && (
               <span>
                 allocation. I have created a demo user that can be used to sign
-                in and explore the app: Username=demoUser, Password=demoPass.
-                Once on the main table, you are able to delete, edit or add new
-                investments. The price data for each investment is updated
-                periodically.{" "}
+                in and explore the app: Username=demoUser,
+                Password=demoPass@email.com. Once on the main table, you are
+                able to delete, edit or add new investments. The price data for
+                each investment is updated periodically.{" "}
               </span>
             )}
           </p>
