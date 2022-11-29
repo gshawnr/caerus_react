@@ -54,10 +54,6 @@ function Home() {
     getInvestment();
   }, [refreshApp]);
 
-  const handleAddBtn = (e) => {
-    setAddModal(true);
-  };
-
   const handleAddInvestment = async (inv) => {
     try {
       inv = investmentFormatter(inv);
@@ -106,29 +102,13 @@ function Home() {
   };
 
   const submitEdit = async (obj) => {
-    closeEditModal();
+    setOpenEditModal((prev) => !prev);
     obj = investmentFormatter(obj);
 
     await putBackendApi("equities/edit", obj);
 
     setIsLoaded(false);
     setRefreshApp(true);
-  };
-
-  const closeAddModal = () => {
-    setAddModal((prev) => {
-      return !prev;
-    });
-  };
-
-  const closeEditModal = () => {
-    setOpenEditModal((prev) => {
-      return !prev;
-    });
-  };
-
-  const toggleErrorModal = () => {
-    navigate("/");
   };
 
   // set display message if error
@@ -146,12 +126,15 @@ function Home() {
       {!isLoaded && !fetchErrorMsg ? (
         <CircularIndeterminate />
       ) : fetchErrorMsg ? (
-        <ErrorModal closeErrorModal={toggleErrorModal} message={displayMsg} />
+        <ErrorModal
+          closeErrorModal={() => navigate("/")}
+          message={displayMsg}
+        />
       ) : (
         <div className="tableContainer">
           {addModal && (
             <AddModal
-              closeModal={closeAddModal}
+              closeModal={() => setAddModal((prev) => !prev)}
               addInv={handleAddInvestment}
             ></AddModal>
           )}
@@ -159,13 +142,13 @@ function Home() {
             <EditModal
               deleteInv={handleDeleteInvestment}
               onEdit={submitEdit}
-              closeModal={closeEditModal}
+              closeModal={() => setOpenEditModal((prev) => !prev)}
             >
               {editInv}
             </EditModal>
           )}
           <Table handleRowClick={openEditInvestment} data={investments} />
-          <FormButton btnClickHandler={handleAddBtn} btnText="Add" />
+          <FormButton btnClickHandler={() => setAddModal(true)} btnText="Add" />
         </div>
       )}
     </div>

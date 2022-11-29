@@ -9,6 +9,8 @@
   max-width: 30%;
   min-width: 30%;
   padding: 3% 2%;
+  box-shadow: rgba(0, 0, 0, 0.3) 0px 19px 38px,
+    rgba(0, 0, 0, 0.22) 0px 15px 12px;
 }
 
 .login-form h2 {
