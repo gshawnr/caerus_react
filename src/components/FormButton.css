@@ -2,6 +2,8 @@
   display: block;
   background-color: #b2b2b2;
   border-radius: 5px;
+  border-style: none;
+  box-shadow: rgba(0, 0, 0, 0.1) 0px 19px 38px, rgba(0, 0, 0, 0.1) 0px 15px 12px;
   color: #eef2e6;
   width: 90%;
   height: 40px;

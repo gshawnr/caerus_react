@@ -5,9 +5,10 @@
 table {
   width: 100%;
   border-collapse: collapse;
-  border: 3px solid black;
+  border: 3px solid rgb(205 205 205);
+  border-style: ridge;
   font-size: larger;
-  box-shadow: rgba(0, 0, 0, 0.3) 0px 19px 38px,
+  box-shadow: rgba(216, 205, 205, 0.3) 0px 19px 38px,
     rgba(0, 0, 0, 0.22) 0px 15px 12px;
 }
 

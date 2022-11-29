@@ -2,13 +2,13 @@ import React from "react";
 import "./Row.css";
 
 function Row({
-  colArr = [],
+  columnMap = {},
   rowData,
   handleCellClick,
   onRowClick,
   rowEditable,
 }) {
-  const formattedRow = colArr.map((col) => {
+  const formattedRow = Object.keys(columnMap).map((col) => {
     if (col === "value") {
       return Number((rowData.units * rowData.unitPrice).toFixed(2));
     }

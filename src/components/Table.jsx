@@ -9,10 +9,23 @@ function Table({
   handleCellClick = null,
   rowEditable = false,
 }) {
-  const col_str = headerStr
-    ? headerStr
-    : "market,ticker,targetAllocation,currentAllocation,unitPrice,units,value,buy/sell,buy/sell (units)";
-  const col_headers = col_str.split(",");
+  // const col_str = headerStr
+  //   ? headerStr
+  //   : "market,ticker,targetAllocation,currentAllocation,unitPrice,units,value,buy/sell,buy/sell (units)";
+
+  const columnMap = {
+    market: "Market",
+    ticker: "Ticker",
+    targetAllocation: "Target %",
+    currentAllocation: "Current %",
+    unitPrice: "Unit Price",
+    units: "Units",
+    value: "Value",
+    diffDollars: "Buy / Sell ($)",
+    diffUnits: "Buy / Sell (units)",
+  };
+
+  // const col_headers = col_str.split(",");
 
   const handleColClick = (e) => {
     // to be used for sorting
@@ -23,8 +36,8 @@ function Table({
     <table className="tableClass">
       <tbody>
         <tr onClick={handleColClick}>
-          {col_headers.map((col, index) => (
-            <th key={index}>{col}</th>
+          {Object.keys(columnMap).map((col, index) => (
+            <th key={index}>{columnMap[col]}</th>
           ))}
         </tr>
         {data.map((thisRow, index) => {
@@ -33,7 +46,7 @@ function Table({
               onRowClick={handleRowClick && (() => handleRowClick(thisRow))}
               handleCellClick={handleCellClick}
               key={index}
-              colArr={col_headers}
+              columnMap={columnMap}
               rowData={thisRow}
               rowEditable={rowEditable}
             />

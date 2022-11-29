@@ -15,12 +15,12 @@ export const calculateTableData = (dataArr) => {
     let roundedPercent = roundHelper(percent, 2);
     inv.currentAllocation = roundedPercent;
 
-    inv["buy/sell"] = roundHelper(
+    inv["diffDollars"] = roundHelper(
       portfolioValue * ((inv.targetAllocation - inv.currentAllocation) / 100),
       2
     );
 
-    inv["buy/sell (units)"] = roundHelper(inv["buy/sell"] / inv.unitPrice, 2);
+    inv["diffUnits"] = roundHelper(inv["diffDollars"] / inv.unitPrice, 2);
   }
 
   return { portfolioValue, dataArr };
