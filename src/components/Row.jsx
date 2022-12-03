@@ -8,10 +8,8 @@ function Row({
   onRowClick,
   rowEditable,
 }) {
+  // get all provided column data
   const formattedRow = Object.keys(columnMap).map((col) => {
-    if (col === "value") {
-      return Number((rowData.units * rowData.unitPrice).toFixed(2));
-    }
     return rowData[col];
   });
 

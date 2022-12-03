@@ -5,14 +5,11 @@ import Row from "./Row";
 function Table({
   headerStr = null,
   data = [],
+  totals = {},
   handleRowClick = null,
   handleCellClick = null,
   rowEditable = false,
 }) {
-  // const col_str = headerStr
-  //   ? headerStr
-  //   : "market,ticker,targetAllocation,currentAllocation,unitPrice,units,value,buy/sell,buy/sell (units)";
-
   const columnMap = {
     market: "Market",
     ticker: "Ticker",
@@ -24,8 +21,6 @@ function Table({
     diffDollars: "Buy / Sell ($)",
     diffUnits: "Buy / Sell (units)",
   };
-
-  // const col_headers = col_str.split(",");
 
   const handleColClick = (e) => {
     // to be used for sorting
@@ -52,6 +47,7 @@ function Table({
             />
           );
         })}
+        {<Row columnMap={columnMap} rowData={totals} />}
       </tbody>
     </table>
   );

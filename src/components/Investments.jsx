@@ -7,10 +7,8 @@ import AddModal from "./AddModal";
 import EditModal from "./EditModal";
 import FormButton from "./FormButton";
 import ErrorModal from "./ErrorModal";
-import {
-  calculateTableData,
-  investmentFormatter,
-} from "../services/CalculationService";
+import Portfolio from "../services/Portfolio";
+import { investmentFormatter } from "../services/CalculationService";
 import {
   getBackendApi,
   putBackendApi,
@@ -19,6 +17,7 @@ import {
 
 function Home() {
   const [investments, setInvestments] = useState([]);
+  const [investmentTotals, setInvestmentTotals] = useState({});
   const [refreshApp, setRefreshApp] = useState(false);
   const [isLoaded, setIsLoaded] = useState(false);
   const [fetchErrorMsg, setFetchErrorMsg] = useState(null);
@@ -33,9 +32,16 @@ function Home() {
     const getInvestment = async () => {
       try {
         const data = await getBackendApi();
-        const { dataArr } = calculateTableData(data);
+        const portfolio = new Portfolio(data);
 
-        setInvestments(dataArr);
+        setInvestments(portfolio.updatedData);
+        setInvestmentTotals({
+          targetAllocation: portfolio.totalTargetAllocation,
+          currentAllocation: portfolio.totalCurrentAllocation,
+          value: portfolio.portfolioValue,
+          market: "TOTAL",
+        });
+
         setFetchErrorMsg(null);
         setFetchErrorCode(null);
         setIsLoaded(true);
@@ -103,7 +109,7 @@ function Home() {
 
   const submitEdit = async (obj) => {
     setOpenEditModal((prev) => !prev);
-    obj = investmentFormatter(obj);
+    // obj = investmentFormatter(obj);
 
     await putBackendApi("equities/edit", obj);
 
@@ -147,7 +153,11 @@ function Home() {
               {editInv}
             </EditModal>
           )}
-          <Table handleRowClick={openEditInvestment} data={investments} />
+          <Table
+            handleRowClick={openEditInvestment}
+            data={investments}
+            totals={investmentTotals}
+          />
           <FormButton btnClickHandler={() => setAddModal(true)} btnText="Add" />
         </div>
       )}
